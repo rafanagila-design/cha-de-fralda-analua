@@ -308,13 +308,9 @@ async function reservarMimo(item) {
 
     }
 
-    const mensagem = `Olá! 💜
+const mensagem = `Olá! 💜
 
 Gostaria de confirmar minha presença no Chá de Fraldas da Analua.
-
-Reservei o mimo:
-
-${item}
 
 Até breve! 🌙`;
 
