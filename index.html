@@ -1,1 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Chá de Fralda da Analua 🌙</title>
+
+    <meta name="description" content="Você é nosso convidado para celebrar a chegada da Analua!">
+
+    <link rel="icon" href="assets/images/favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ESTRELAS -->
+    <div class="stars"></div>
+
+    <!-- NUVENS -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+
+    <!-- LUA -->
+    <div class="moon"></div>
+
+    <!-- MENU -->
+
+    <header>
+
+        <div class="container">
+
+            <div class="logo">
+
+                <img src="assets/images/logo.png" alt="Analua">
+
+                <div>
+
+                    <h1>Analua</h1>
+
+                    <span>Chá de Fralda</span>
+
+                </div>
+
+            </div>
+
+            <nav>
+
+                <a href="#informacoes">
+                    ℹ️ Informações
+                </a>
+
+                <a href="#mimos">
+                    🎁 Lista de Mimos
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="banner">
+
+            <img src="assets/images/banner.png" alt="Banner do Chá da Analua">
+
+            <div class="countdown-card">
+
+                <div class="time">
+
+                    <span id="dias">00</span>
+
+                    <small>Dias</small>
+
+                </div>
+
+                <div class="time">
+
+                    <span id="horas">00</span>
+
+                    <small>Horas</small>
+
+                </div>
+
+                <div class="time">
+
+                    <span id="minutos">00</span>
+
+                    <small>Minutos</small>
+
+                </div>
+
+                <div class="time">
+
+                    <span id="segundos">00</span>
+
+                    <small>Segundos</small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BOTÕES -->
+
+    <section class="hero-buttons">
+
+        <a href="#mimos" class="btn primary">
+
+            💜 Escolher um Mimo
+
+        </a>
+
+        <a href="#informacoes" class="btn secondary">
+
+            ℹ️ Informações
+
+        </a>
+
+        <a
+            class="btn whatsapp"
+            href="https://wa.me/5551991814905?text=Olá! Gostaria de confirmar minha presença no Chá de Fralda da Analua. 💜"
+            target="_blank">
+
+            💬 Confirmar minha presença
+
+        </a>
+
+    </section>
+
+    <!-- INFORMAÇÕES -->
+
+    <section id="informacoes" class="info">
+
+        <div class="card">
+
+            <h2>Chá de Fralda da Analua 🌙</h2>
+
+            <div class="info-item">
+
+                <strong>📅 Data</strong>
+
+                <p>16 de Agosto de 2026</p>
+
+            </div>
+
+            <div class="info-item">
+
+                <strong>🕓 Horário</strong>
+
+                <p>16h</p>
+
+            </div>
+
+            <div class="info-item">
+
+                <strong>📍 Local</strong>
+
+                <p>
+                    Fábrika de Festas<br>
+
+                    Av. João Pereira de Vargas, nº 720<br>
+
+                    Centro • Sapucaia do Sul/RS
+                </p>
+
+            </div>
+
+            <div class="buttons-info">
+
+                <a
+                    target="_blank"
+                    class="btn primary"
+                    href="https://maps.google.com/?q=Fabrika+de+Festas+Sapucaia+do+Sul">
+
+                    📍 Como chegar
+
+                </a>
+
+                <a
+                    target="_blank"
+                    class="btn whatsapp"
+                    href="https://wa.me/5551991814905?text=Olá! Gostaria de confirmar minha presença no Chá de Fralda da Analua. 💜">
+
+                    💬 Confirmar presença
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>    <!-- LISTA DE MIMOS -->
+
+    <section id="mimos" class="gift-list">
+
+        <div class="container">
+
+            <h2>🎁 Escolha um mimo para a Analua</h2>
+
+            <p class="subtitle">
+                Sua presença é o presente mais importante. Caso deseje,
+                escolha um mimo com muito carinho. 💜
+            </p>
+
+            <!-- PESQUISA -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="🔍 Pesquisar um mimo...">
+
+            </div>
+
+            <!-- CATEGORIAS -->
+
+            <div class="categories">
+
+                <button class="category active">Todos</button>
+
+                <button class="category">Fraldas</button>
+
+                <button class="category">Higiene</button>
+
+                <button class="category">Banho</button>
+
+                <button class="category">Roupinhas</button>
+
+                <button class="category">Alimentação</button>
+
+                <button class="category">Passeio</button>
+
+                <button class="category">Brinquedos</button>
+
+                <button class="category">Quarto</button>
+
+            </div>
+
+            <!-- CARDS -->
+
+            <div class="cards" id="cardsContainer">
+
+                <!-- CARD -->
+
+                <div class="gift-card">
+
+                    <span class="badge">Fraldas</span>
+
+                    <h3>Fralda Pampers Premium Care P</h3>
+
+                    <p class="quantity">
+
+                        Disponível:
+                        <strong>12 unidades</strong>
+
+                    </p>
+
+                    <button class="reserve-btn">
+
+                        💜 Escolher este mimo
+
+                    </button>
+
+                </div>
+
+                <!-- CARD -->
+
+                <div class="gift-card">
+
+                    <span class="badge">Higiene</span>
+
+                    <h3>Lenço Umedecido</h3>
+
+                    <p class="quantity">
+
+                        Disponível:
+                        <strong>10 unidades</strong>
+
+                    </p>
+
+                    <button class="reserve-btn">
+
+                        💜 Escolher este mimo
+
+                    </button>
+
+                </div>
+
+                <!-- CARD -->
+
+                <div class="gift-card">
+
+                    <span class="badge">Banho</span>
+
+                    <h3>Shampoo Infantil</h3>
+
+                    <p class="quantity">
+
+                        Disponível:
+                        <strong>5 unidades</strong>
+
+                    </p>
+
+                    <button class="reserve-btn">
+
+                        💜 Escolher este mimo
+
+                    </button>
+
+                </div>
+
+                <!-- Os demais cards serão carregados automaticamente
+                     quando conectarmos à sua planilha -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- BOTÃO VOLTAR AO TOPO -->
+
+    <button id="backToTop">
+
+        ↑
+
+    </button>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <p>Com carinho,</p>
+
+        <h3>Rafaella • João • Analua 🌙</h3>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
