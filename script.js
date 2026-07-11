@@ -1,53 +1,49 @@
-/* ==========================================
-   CHÁ DE FRALDA DA ANALUA
+/* ======================================================
+   CHÁ DE FRALDAS ANALUA
    script.js
-========================================== */
+====================================================== */
 
+/* ======================================================
+   URL DO APPS SCRIPT
+====================================================== */
 
-/* ==========================================
+const API_URL = "https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+
+/* ======================================================
    CONTAGEM REGRESSIVA
-========================================== */
+====================================================== */
 
-const dataEvento = new Date("August 16, 2026 16:00:00").getTime();
-
-const dias = document.getElementById("dias");
-const horas = document.getElementById("horas");
-const minutos = document.getElementById("minutos");
-const segundos = document.getElementById("segundos");
+const dataEvento = new Date("2026-08-16T16:00:00");
 
 function atualizarContagem() {
 
-    const agora = new Date().getTime();
+    const agora = new Date();
 
     const distancia = dataEvento - agora;
 
+    const dias = document.getElementById("dias");
+    const horas = document.getElementById("horas");
+    const minutos = document.getElementById("minutos");
+    const segundos = document.getElementById("segundos");
+
     if (distancia <= 0) {
 
-        dias.innerHTML = "00";
-        horas.innerHTML = "00";
-        minutos.innerHTML = "00";
-        segundos.innerHTML = "00";
+        dias.textContent = "00";
+        horas.textContent = "00";
+        minutos.textContent = "00";
+        segundos.textContent = "00";
 
         return;
 
     }
 
-    dias.innerHTML = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    dias.textContent = Math.floor(distancia / 1000 / 60 / 60 / 24);
 
-    horas.innerHTML = Math.floor(
-        (distancia % (1000 * 60 * 60 * 24))
-        / (1000 * 60 * 60)
-    );
+    horas.textContent = Math.floor((distancia / 1000 / 60 / 60) % 24);
 
-    minutos.innerHTML = Math.floor(
-        (distancia % (1000 * 60 * 60))
-        / (1000 * 60)
-    );
+    minutos.textContent = Math.floor((distancia / 1000 / 60) % 60);
 
-    segundos.innerHTML = Math.floor(
-        (distancia % (1000 * 60))
-        / 1000
-    );
+    segundos.textContent = Math.floor((distancia / 1000) % 60);
 
 }
 
@@ -55,16 +51,15 @@ setInterval(atualizarContagem,1000);
 
 atualizarContagem();
 
-
-/* ==========================================
-   BOTÃO VOLTAR AO TOPO
-========================================== */
+/* ======================================================
+   VOLTAR AO TOPO
+====================================================== */
 
 const voltarTopo = document.getElementById("backToTop");
 
 window.addEventListener("scroll",()=>{
 
-    if(window.scrollY > 500){
+    if(window.scrollY>500){
 
         voltarTopo.style.display="block";
 
@@ -88,32 +83,23 @@ voltarTopo.addEventListener("click",()=>{
 
 });
 
-
-/* ==========================================
-   PESQUISA DOS MIMOS
-========================================== */
+/* ======================================================
+   PESQUISA
+====================================================== */
 
 const pesquisa = document.getElementById("searchInput");
-
-const cards = document.querySelectorAll(".gift-card");
 
 pesquisa.addEventListener("keyup",()=>{
 
     const texto = pesquisa.value.toLowerCase();
 
+    const cards = document.querySelectorAll(".card-mimo");
+
     cards.forEach(card=>{
 
         const titulo = card.querySelector("h3").innerText.toLowerCase();
 
-        const categoria = card.querySelector(".badge").innerText.toLowerCase();
-
-        if(
-
-            titulo.includes(texto) ||
-
-            categoria.includes(texto)
-
-        ){
+        if(titulo.includes(texto)){
 
             card.style.display="block";
 
@@ -127,148 +113,75 @@ pesquisa.addEventListener("keyup",()=>{
 
 });
 
+/* ======================================================
+   FILTRO CATEGORIAS
+====================================================== */
 
-/* ==========================================
-   FILTRO DAS CATEGORIAS
-========================================== */
+const categorias = document.querySelectorAll(".category");
 
-const botoesCategoria = document.querySelectorAll(".category");
-
-botoesCategoria.forEach(botao=>{
+categorias.forEach(botao=>{
 
     botao.addEventListener("click",()=>{
 
-        botoesCategoria.forEach(b=>{
+        categorias.forEach(btn=>{
 
-            b.classList.remove("active");
+            btn.classList.remove("active");
 
         });
 
         botao.classList.add("active");
 
-        const categoria = botao.innerText.toLowerCase();
-
-        cards.forEach(card=>{
-
-            const badge = card.querySelector(".badge").innerText.toLowerCase();
-
-            if(
-
-                categoria === "todos"
-
-            ){
-
-                card.style.display="block";
-
-            }
-
-            else if(
-
-                badge === categoria
-
-            ){
-
-                card.style.display="block";
-
-            }
-
-            else{
-
-                card.style.display="none";
-
-            }
-
-        });
-
     });
 
-});
-
-
-/* ==========================================
-   ANIMAÇÃO AO ROLAR
-========================================== */
-
-const elementos = document.querySelectorAll(
-
-".card,.gift-card,.hero-buttons,.banner"
-
-);
-
-const observer = new IntersectionObserver((entries)=>{
-
-    entries.forEach(entry=>{
-
-        if(entry.isIntersecting){
-
-            entry.target.style.opacity="1";
-
-            entry.target.style.transform="translateY(0)";
-
-        }
-/* ========================================
-   LISTA DE MIMOS (GOOGLE SHEETS)
-======================================== */
-
-const URL_PLANILHA =
-"https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+});/* ======================================================
+   CARREGAR MIMOS DA PLANILHA
+====================================================== */
 
 async function carregarMimos() {
 
     try {
 
-        const resposta = await fetch(URL_PLANILHA);
+        const resposta = await fetch(API_URL);
 
         const dados = await resposta.json();
 
         const lista = document.getElementById("lista-mimos");
 
-        if(!lista) return;
-
         lista.innerHTML = "";
 
-        dados.forEach(item=>{
+        dados.forEach(item => {
 
             const disponivel = Number(item.disponivel);
 
             const card = document.createElement("div");
 
-            card.className="card-mimo";
+            card.className = "card-mimo";
+
+            card.dataset.categoria = item.categoria.toLowerCase();
 
             card.innerHTML = `
 
-            <h3>${item.item}</h3>
+                <h3>${item.item}</h3>
 
-            <p>${item.categoria}</p>
+                <p>${item.categoria}</p>
 
-            <span class="${disponivel>0?'verde':'vermelho'}">
+                <span class="${disponivel > 0 ? "verde" : "vermelho"}">
 
-                ${disponivel>0
-                ? "Disponível ("+disponivel+")"
-                : "Reservado"}
+                    ${disponivel > 0
+                        ? `${disponivel} disponível(is)`
+                        : "ESGOTADO"}
 
-            </span>
+                </span>
 
-            ${
-                disponivel>0
+                <button
+                    ${disponivel <= 0 ? "disabled" : ""}
+                    onclick="reservarMimo('${item.item.replace(/'/g,"\\'")}')">
 
-                ?
+                    ${disponivel > 0
+                        ? "Escolher este mimo"
+                        : "Indisponível"}
 
-                `<button onclick="reservarMimo('${item.item}')">
-
-                Escolher este mimo
-
-                </button>`
-
-                :
-
-                `<button disabled>
-
-                Reservado
-
-                </button>`
-
-            }
+                </button>
 
             `;
 
@@ -276,153 +189,105 @@ async function carregarMimos() {
 
         });
 
-    }
+    } catch (erro) {
 
-    catch(erro){
-
-        console.log(erro);
+        console.error("Erro ao carregar a planilha:", erro);
 
     }
 
 }
 
-async function reservarMimo(nome){
+/* ======================================================
+   RESERVAR MIMO
+====================================================== */
+
+async function reservarMimo(item) {
 
     const confirmar = confirm(
 
-        "Deseja reservar este mimo?"
+`Você deseja reservar este mimo?
+
+${item}
+
+Após confirmar, você será direcionado ao WhatsApp para confirmar sua presença.`
 
     );
 
-    if(!confirmar) return;
+    if (!confirmar) return;
+
+    try {
+
+        await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+
+                "Content-Type": "application/x-www-form-urlencoded"
+
+            },
+
+            body: "item=" + encodeURIComponent(item)
+
+        });
+
+        carregarMimos();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+    }
+
+    const mensagem =
+
+`Olá! 💜
+
+Gostaria de confirmar minha presença no Chá de Fraldas da Analua.
+
+Até breve! 🌙`;
 
     window.open(
 
-`https://wa.me/5551991814905?text=${encodeURIComponent(
-`Olá! Quero confirmar minha presença no Chá da Analua 🌙
-
-Gostaria de reservar o mimo:
-
-${nome}`)}`,
+`https://wa.me/5551991814905?text=${encodeURIComponent(mensagem)}`,
 
 "_blank"
 
-);
+    );
 
 }
 
-window.addEventListener("load",carregarMimos);
-    });
+/* ======================================================
+   FILTRO POR CATEGORIA
+====================================================== */
 
-},{
+categorias.forEach(botao => {
 
-    threshold:0.15
+    botao.addEventListener("click", () => {
 
-});
+        const categoria = botao.textContent.trim().toLowerCase();
 
-elementos.forEach(el=>{
+        const cards = document.querySelectorAll(".card-mimo");
 
-    el.style.opacity="0";
+        cards.forEach(card => {
 
-    el.style.transform="translateY(40px)";
+            if (categoria === "todos") {
 
-    el.style.transition="all .8s ease";
+                card.style.display = "block";
 
-    observer.observe(el);
+                return;
 
-});
-/* ===========================
-   LISTA DE MIMOS
-=========================== */
+            }
 
-const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+            if (card.dataset.categoria === categoria) {
 
-async function carregarMimos() {
+                card.style.display = "block";
 
-    const resposta = await fetch(URL_PLANILHA);
-    const dados = await resposta.json();
+            } else {
 
-    const lista = document.getElementById("lista-mimos");
+                card.style.display = "none";
 
-    lista.innerHTML = "";
-
-    dados.forEach(item => {
-
-        const disponivel = Number(item.disponivel);
-
-        const card = document.createElement("div");
-        card.className = "card-mimo";
-
-        card.innerHTML = `
-
-            <h3>${item.item}</h3>
-
-            <p>${item.categoria}</p>
-
-            <span class="${disponivel > 0 ? "verde" : "vermelho"}">
-
-                ${disponivel > 0
-                    ? "Disponível (" + disponivel + ")"
-                    : "Esgotado"}
-
-            </span>
-
-        `;
-
-        lista.appendChild(card);
-
-    });
-
-}
-
-carregarMimos();
-
-/* ==========================================
-   BOTÃO ESCOLHER MIMO
-========================================== */
-
-const reservar = document.querySelectorAll(".reserve-btn");
-
-reservar.forEach(botao=>{
-
-    botao.addEventListener("click",()=>{
-
-        alert(
-
-`💜 Obrigada pelo carinho!
-
-Em breve esta lista será integrada à nossa planilha.
-
-Assim, quando alguém escolher um mimo, ele ficará automaticamente indisponível para os próximos convidados.
-
-🌙 Analua agradece seu carinho!`
-
-        );
-
-    });
-
-});
-
-
-/* ==========================================
-   MENU SUAVE
-========================================== */
-
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-
-    link.addEventListener("click",function(e){
-
-        e.preventDefault();
-
-        const destino = document.querySelector(
-
-            this.getAttribute("href")
-
-        );
-
-        destino.scrollIntoView({
-
-            behavior:"smooth"
+            }
 
         });
 
@@ -430,9 +295,56 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
 
 });
 
+/* ======================================================
+   ANIMAÇÃO DOS CARDS
+====================================================== */
 
-/* ==========================================
-   FIM
-========================================== */
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            entry.target.style.opacity = "1";
+
+            entry.target.style.transform = "translateY(0)";
+
+        }
+
+    });
+
+}, {
+
+    threshold: 0.15
+
+});
+
+function ativarAnimacoes() {
+
+    document.querySelectorAll(".card-mimo").forEach(card => {
+
+        card.style.opacity = "0";
+
+        card.style.transform = "translateY(30px)";
+
+        card.style.transition = ".6s";
+
+        observer.observe(card);
+
+    });
+
+}
+
+/* ======================================================
+   CARREGAMENTO
+====================================================== */
+
+window.addEventListener("load", async () => {
+
+    await carregarMimos();
+
+    ativarAnimacoes();
+
+});
 
 console.log("🌙 Site da Analua carregado com sucesso!");
