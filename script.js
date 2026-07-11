@@ -114,24 +114,45 @@ pesquisa.addEventListener("keyup",()=>{
 });
 
 /* ======================================================
-   FILTRO CATEGORIAS
+   FILTRO POR CATEGORIA
 ====================================================== */
 
 const categorias = document.querySelectorAll(".category");
 
-categorias.forEach(botao=>{
+categorias.forEach(botao => {
 
-    botao.addEventListener("click",()=>{
+    botao.addEventListener("click", () => {
 
-        categorias.forEach(btn=>{
-
-            btn.classList.remove("active");
-
-        });
+        categorias.forEach(btn => btn.classList.remove("active"));
 
         botao.classList.add("active");
 
+        const categoria = botao.textContent.trim().toLowerCase();
+
+        document.querySelectorAll(".card-mimo").forEach(card => {
+
+            if (categoria === "todos") {
+
+                card.style.display = "block";
+                return;
+
+            }
+
+            if (card.dataset.categoria === categoria) {
+
+                card.style.display = "block";
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
     });
+
+});
 
 });/* ======================================================
    CARREGAR MIMOS DA PLANILHA
@@ -256,44 +277,6 @@ Até breve! 🌙`;
     );
 
 }
-
-/* ======================================================
-   FILTRO POR CATEGORIA
-====================================================== */
-
-categorias.forEach(botao => {
-
-    botao.addEventListener("click", () => {
-
-        const categoria = botao.textContent.trim().toLowerCase();
-
-        const cards = document.querySelectorAll(".card-mimo");
-
-        cards.forEach(card => {
-
-            if (categoria === "todos") {
-
-                card.style.display = "block";
-
-                return;
-
-            }
-
-            if (card.dataset.categoria === categoria) {
-
-                card.style.display = "block";
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-    });
-
-});
 
 /* ======================================================
    ANIMAÇÃO DOS CARDS
