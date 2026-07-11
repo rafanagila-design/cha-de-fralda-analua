@@ -1,30 +1,34 @@
 /* ======================================================
-   CHÁ DE FRALDAS ANALUA
+   CHÁ DE FRALDA DA ANALUA
    script.js
 ====================================================== */
 
 /* ======================================================
-   URL DO APPS SCRIPT
+   CONFIGURAÇÕES
 ====================================================== */
 
 const API_URL = "https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+
+const DATA_EVENTO = new Date("2026-08-16T16:00:00");
 
 /* ======================================================
    CONTAGEM REGRESSIVA
 ====================================================== */
 
-const dataEvento = new Date("2026-08-16T16:00:00");
-
 function atualizarContagem() {
 
-    const agora = new Date();
+    const agora = new Date().getTime();
 
-    const distancia = dataEvento - agora;
+    const distancia = DATA_EVENTO.getTime() - agora;
 
     const dias = document.getElementById("dias");
     const horas = document.getElementById("horas");
     const minutos = document.getElementById("minutos");
     const segundos = document.getElementById("segundos");
+
+    if (!dias || !horas || !minutos || !segundos) {
+        return;
+    }
 
     if (distancia <= 0) {
 
@@ -37,124 +41,67 @@ function atualizarContagem() {
 
     }
 
-    dias.textContent = Math.floor(distancia / 1000 / 60 / 60 / 24);
+    dias.textContent = String(
+        Math.floor(distancia / (1000 * 60 * 60 * 24))
+    ).padStart(2, "0");
 
-    horas.textContent = Math.floor((distancia / 1000 / 60 / 60) % 24);
+    horas.textContent = String(
+        Math.floor((distancia / (1000 * 60 * 60)) % 24)
+    ).padStart(2, "0");
 
-    minutos.textContent = Math.floor((distancia / 1000 / 60) % 60);
+    minutos.textContent = String(
+        Math.floor((distancia / (1000 * 60)) % 60)
+    ).padStart(2, "0");
 
-    segundos.textContent = Math.floor((distancia / 1000) % 60);
+    segundos.textContent = String(
+        Math.floor((distancia / 1000) % 60)
+    ).padStart(2, "0");
 
 }
 
-setInterval(atualizarContagem,1000);
-
+setInterval(atualizarContagem, 1000);
 atualizarContagem();
 
 /* ======================================================
-   VOLTAR AO TOPO
+   BOTÃO VOLTAR AO TOPO
 ====================================================== */
 
 const voltarTopo = document.getElementById("backToTop");
 
-window.addEventListener("scroll",()=>{
+if (voltarTopo) {
 
-    if(window.scrollY>500){
+    window.addEventListener("scroll", () => {
 
-        voltarTopo.style.display="block";
-
-    }else{
-
-        voltarTopo.style.display="none";
-
-    }
-
-});
-
-voltarTopo.addEventListener("click",()=>{
-
-    window.scrollTo({
-
-        top:0,
-
-        behavior:"smooth"
+        voltarTopo.style.display =
+            window.scrollY > 500 ? "flex" : "none";
 
     });
 
-});
+    voltarTopo.addEventListener("click", () => {
 
-/* ======================================================
-   PESQUISA
-====================================================== */
+        window.scrollTo({
 
-const pesquisa = document.getElementById("searchInput");
+            top: 0,
 
-pesquisa.addEventListener("keyup",()=>{
-
-    const texto = pesquisa.value.toLowerCase();
-
-    const cards = document.querySelectorAll(".card-mimo");
-
-    cards.forEach(card=>{
-
-        const titulo = card.querySelector("h3").innerText.toLowerCase();
-
-        if(titulo.includes(texto)){
-
-            card.style.display="block";
-
-        }else{
-
-            card.style.display="none";
-
-        }
-
-    });
-
-});
-
-/* ======================================================
-   FILTRO POR CATEGORIA
-====================================================== */
-
-const categorias = document.querySelectorAll(".category");
-
-categorias.forEach(botao => {
-
-    botao.addEventListener("click", () => {
-
-        categorias.forEach(btn => btn.classList.remove("active"));
-
-        botao.classList.add("active");
-
-        const categoria = botao.textContent.trim().toLowerCase();
-
-        document.querySelectorAll(".card-mimo").forEach(card => {
-
-            if (categoria === "todos") {
-
-                card.style.display = "block";
-                return;
-
-            }
-
-            if (card.dataset.categoria === categoria) {
-
-                card.style.display = "block";
-
-            } else {
-
-                card.style.display = "none";
-
-            }
+            behavior: "smooth"
 
         });
 
     });
 
-});
+}
 
-});/* ======================================================
+/* ======================================================
+   VARIÁVEIS GLOBAIS
+====================================================== */
+
+let todosMimos = [];
+
+const lista = document.getElementById("lista-mimos");
+
+const pesquisa = document.getElementById("searchInput");
+
+const categorias = document.querySelectorAll(".category");/* ======================================================
    CARREGAR MIMOS DA PLANILHA
 ====================================================== */
 
@@ -164,116 +111,217 @@ async function carregarMimos() {
 
         const resposta = await fetch(API_URL);
 
-        const dados = await resposta.json();
+        if (!resposta.ok) {
+            throw new Error("Erro ao acessar o Apps Script.");
+        }
 
-        const lista = document.getElementById("lista-mimos");
+        todosMimos = await resposta.json();
 
-        lista.innerHTML = "";
-
-        dados.forEach(item => {
-
-            const disponivel = Number(item.disponivel);
-
-            const card = document.createElement("div");
-
-            card.className = "card-mimo";
-
-            card.dataset.categoria = item.categoria.toLowerCase();
-
-            card.innerHTML = `
-
-                <h3>${item.item}</h3>
-
-                <p>${item.categoria}</p>
-
-                <span class="${disponivel > 0 ? "verde" : "vermelho"}">
-
-                    ${disponivel > 0
-                        ? `${disponivel} disponível(is)`
-                        : "ESGOTADO"}
-
-                </span>
-
-                <button
-                    ${disponivel <= 0 ? "disabled" : ""}
-                    onclick="reservarMimo('${item.item.replace(/'/g,"\\'")}')">
-
-                    ${disponivel > 0
-                        ? "Escolher este mimo"
-                        : "Indisponível"}
-
-                </button>
-
-            `;
-
-            lista.appendChild(card);
-
-        });
+        renderizarMimos(todosMimos);
 
     } catch (erro) {
 
-        console.error("Erro ao carregar a planilha:", erro);
+        console.error("Erro ao carregar mimos:", erro);
+
+        if (lista) {
+
+            lista.innerHTML = `
+
+                <div class="erro-api">
+
+                    <h3>Não foi possível carregar a lista de mimos.</h3>
+
+                    <p>Verifique a conexão com a planilha.</p>
+
+                </div>
+
+            `;
+
+        }
 
     }
 
 }
 
 /* ======================================================
+   RENDERIZAR MIMOS
+====================================================== */
+
+function renderizarMimos(mimos) {
+
+    if (!lista) return;
+
+    lista.innerHTML = "";
+
+    mimos.forEach(item => {
+
+        const disponivel = Number(item.disponivel);
+
+        const card = document.createElement("div");
+
+        card.className = "card-mimo";
+
+        card.dataset.categoria = item.categoria.toLowerCase();
+
+        card.innerHTML = `
+
+            <h3>${item.item}</h3>
+
+            <p class="categoria">${item.categoria}</p>
+
+            <p class="quantidade">
+
+                Disponíveis:
+                <strong>${disponivel}</strong>
+
+            </p>
+
+            <button
+
+                class="btn-reservar"
+
+                ${disponivel <= 0 ? "disabled" : ""}
+
+                onclick="reservarMimo('${item.item.replace(/'/g,"\\'")}')"
+
+            >
+
+                ${disponivel > 0 ? "Escolher este mimo" : "Esgotado"}
+
+            </button>
+
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+/* ======================================================
+   PESQUISA
+====================================================== */
+
+if (pesquisa) {
+
+    pesquisa.addEventListener("keyup", () => {
+
+        const texto = pesquisa.value.toLowerCase();
+
+        const filtrados = todosMimos.filter(item =>
+
+            item.item.toLowerCase().includes(texto)
+
+        );
+
+        renderizarMimos(filtrados);
+
+    });
+
+}
+
+/* ======================================================
+   FILTRO POR CATEGORIA
+====================================================== */
+
+categorias.forEach(botao => {
+
+    botao.addEventListener("click", () => {
+
+        categorias.forEach(btn =>
+
+            btn.classList.remove("active")
+
+        );
+
+        botao.classList.add("active");
+
+        const categoria = botao.textContent.trim().toLowerCase();
+
+        if (categoria === "todos") {
+
+            renderizarMimos(todosMimos);
+
+            return;
+
+        }
+
+        const filtrados = todosMimos.filter(item =>
+
+            item.categoria.toLowerCase() === categoria
+
+        );
+
+        renderizarMimos(filtrados);
+
+    });
+
+});/* ======================================================
    RESERVAR MIMO
 ====================================================== */
 
 async function reservarMimo(item) {
 
     const confirmar = confirm(
-
-`Você deseja reservar este mimo?
-
-${item}
-
-Após confirmar, você será direcionado ao WhatsApp para confirmar sua presença.`
-
+        `Deseja reservar o mimo:\n\n${item} ?`
     );
 
     if (!confirmar) return;
 
     try {
 
-        await fetch(API_URL, {
+        const resposta = await fetch(API_URL, {
 
             method: "POST",
 
             headers: {
-
                 "Content-Type": "application/x-www-form-urlencoded"
-
             },
 
             body: "item=" + encodeURIComponent(item)
 
         });
 
-        carregarMimos();
+        const resultado = await resposta.json();
+
+        if (resultado.sucesso) {
+
+            alert("💜 Mimo reservado com sucesso!");
+
+            carregarMimos();
+
+        } else {
+
+            alert(resultado.mensagem);
+
+            return;
+
+        }
 
     } catch (erro) {
 
         console.error(erro);
 
+        alert("Erro ao reservar o mimo.");
+
+        return;
+
     }
 
-    const mensagem =
-
-`Olá! 💜
+    const mensagem = `Olá! 💜
 
 Gostaria de confirmar minha presença no Chá de Fraldas da Analua.
+
+Reservei o mimo:
+
+${item}
 
 Até breve! 🌙`;
 
     window.open(
-
-`https://wa.me/5551991814905?text=${encodeURIComponent(mensagem)}`,
-
-"_blank"
-
+        "https://wa.me/5551991814905?text=" +
+        encodeURIComponent(mensagem),
+        "_blank"
     );
 
 }
@@ -282,35 +330,33 @@ Até breve! 🌙`;
    ANIMAÇÃO DOS CARDS
 ====================================================== */
 
-const observer = new IntersectionObserver((entries) => {
+const observer = new IntersectionObserver((entries)=>{
 
-    entries.forEach(entry => {
+    entries.forEach(entry=>{
 
-        if (entry.isIntersecting) {
+        if(entry.isIntersecting){
 
-            entry.target.style.opacity = "1";
+            entry.target.style.opacity="1";
 
-            entry.target.style.transform = "translateY(0)";
+            entry.target.style.transform="translateY(0)";
 
         }
 
     });
 
-}, {
-
-    threshold: 0.15
-
+},{
+    threshold:0.15
 });
 
-function ativarAnimacoes() {
+function ativarAnimacoes(){
 
-    document.querySelectorAll(".card-mimo").forEach(card => {
+    document.querySelectorAll(".card-mimo").forEach(card=>{
 
-        card.style.opacity = "0";
+        card.style.opacity="0";
 
-        card.style.transform = "translateY(30px)";
+        card.style.transform="translateY(25px)";
 
-        card.style.transition = ".6s";
+        card.style.transition=".6s";
 
         observer.observe(card);
 
@@ -319,10 +365,10 @@ function ativarAnimacoes() {
 }
 
 /* ======================================================
-   CARREGAMENTO
+   INICIALIZAÇÃO
 ====================================================== */
 
-window.addEventListener("load", async () => {
+window.addEventListener("load", async ()=>{
 
     await carregarMimos();
 
