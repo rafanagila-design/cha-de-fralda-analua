@@ -206,7 +206,112 @@ const observer = new IntersectionObserver((entries)=>{
             entry.target.style.transform="translateY(0)";
 
         }
+/* ========================================
+   LISTA DE MIMOS (GOOGLE SHEETS)
+======================================== */
 
+const URL_PLANILHA =
+"https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+
+async function carregarMimos() {
+
+    try {
+
+        const resposta = await fetch(URL_PLANILHA);
+
+        const dados = await resposta.json();
+
+        const lista = document.getElementById("lista-mimos");
+
+        if(!lista) return;
+
+        lista.innerHTML = "";
+
+        dados.forEach(item=>{
+
+            const disponivel = Number(item.disponivel);
+
+            const card = document.createElement("div");
+
+            card.className="card-mimo";
+
+            card.innerHTML = `
+
+            <h3>${item.item}</h3>
+
+            <p>${item.categoria}</p>
+
+            <span class="${disponivel>0?'verde':'vermelho'}">
+
+                ${disponivel>0
+                ? "Disponível ("+disponivel+")"
+                : "Reservado"}
+
+            </span>
+
+            ${
+                disponivel>0
+
+                ?
+
+                `<button onclick="reservarMimo('${item.item}')">
+
+                Escolher este mimo
+
+                </button>`
+
+                :
+
+                `<button disabled>
+
+                Reservado
+
+                </button>`
+
+            }
+
+            `;
+
+            lista.appendChild(card);
+
+        });
+
+    }
+
+    catch(erro){
+
+        console.log(erro);
+
+    }
+
+}
+
+async function reservarMimo(nome){
+
+    const confirmar = confirm(
+
+        "Deseja reservar este mimo?"
+
+    );
+
+    if(!confirmar) return;
+
+    window.open(
+
+`https://wa.me/5551991814905?text=${encodeURIComponent(
+`Olá! Quero confirmar minha presença no Chá da Analua 🌙
+
+Gostaria de reservar o mimo:
+
+${nome}`)}`,
+
+"_blank"
+
+);
+
+}
+
+window.addEventListener("load",carregarMimos);
     });
 
 },{
