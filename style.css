@@ -1,1 +1,1305 @@
+/* ==========================================
+   CHÁ DE FRALDA DA ANALUA
+   style.css
+========================================== */
 
+/* GOOGLE FONTS */
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #faf8ff 30%,
+        #f5efff 100%
+    );
+
+    color:#5e4b7c;
+
+    overflow-x:hidden;
+
+    position:relative;
+}
+
+/* CONTAINER */
+
+.container{
+
+    width:90%;
+    max-width:1200px;
+
+    margin:auto;
+
+}
+
+/* ==========================================
+HEADER
+========================================== */
+
+header{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    z-index:999;
+
+    backdrop-filter:blur(18px);
+
+    background:rgba(255,255,255,.55);
+
+    border-bottom:1px solid rgba(255,255,255,.45);
+
+    transition:.4s;
+
+}
+
+header .container{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo img{
+
+    width:55px;
+
+}
+
+.logo h1{
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:40px;
+
+    color:#8b5cf6;
+
+}
+
+.logo span{
+
+    font-size:13px;
+
+    letter-spacing:2px;
+
+    color:#9d8ab8;
+
+}
+
+nav{
+
+    display:flex;
+
+    gap:35px;
+
+}
+
+nav a{
+
+    text-decoration:none;
+
+    color:#735d96;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+nav a:hover{
+
+    color:#8b5cf6;
+
+}
+
+/* ==========================================
+ HERO
+========================================== */
+
+.hero{
+
+    padding-top:130px;
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+.banner{
+
+    position:relative;
+
+    width:90%;
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+.banner img{
+
+    width:100%;
+
+    border-radius:35px;
+
+    box-shadow:
+
+    0 30px 70px rgba(162,125,255,.18);
+
+    animation:fadeBanner 1.5s ease;
+
+}
+
+/* CONTAGEM */
+
+.countdown-card{
+
+    position:absolute;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    bottom:-45px;
+
+    width:90%;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    padding:22px;
+
+    border-radius:25px;
+
+    backdrop-filter:blur(15px);
+
+    background:rgba(255,255,255,.55);
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.time{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.time span{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#8b5cf6;
+
+}
+
+.time small{
+
+    margin-top:4px;
+
+    color:#8f7ca8;
+
+}
+
+/* ==========================================
+BOTÕES
+========================================== */
+
+.hero-buttons{
+
+    margin-top:90px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.btn{
+
+    width:320px;
+
+    padding:18px;
+
+    border-radius:40px;
+
+    text-decoration:none;
+
+    text-align:center;
+
+    transition:.35s;
+
+    font-weight:600;
+
+    box-shadow:
+
+    0 10px 25px rgba(139,92,246,.12);
+
+}
+
+.primary{
+
+    background:#8b5cf6;
+
+    color:white;
+
+}
+
+.secondary{
+
+    background:white;
+
+    color:#8b5cf6;
+
+}
+
+.whatsapp{
+
+    background:#f8ecff;
+
+    color:#8b5cf6;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-5px) scale(1.03);
+
+    box-shadow:
+
+    0 18px 40px rgba(139,92,246,.20);
+
+}
+
+/* ==========================================
+FUNDO
+========================================== */
+
+.stars{
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+    radial-gradient(circle,#ffffff 1px,transparent 1px);
+
+    background-size:90px 90px;
+
+    opacity:.45;
+
+    animation:twinkle 5s infinite alternate;
+
+    pointer-events:none;
+
+}
+
+.moon{
+
+    position:fixed;
+
+    width:180px;
+
+    height:180px;
+
+    right:5%;
+
+    top:110px;
+
+    border-radius:50%;
+
+    background:#fff8d9;
+
+    box-shadow:
+
+    0 0 60px rgba(255,244,185,.9);
+
+    opacity:.55;
+
+    animation:moonGlow 5s infinite ease-in-out;
+
+    z-index:-1;
+
+}
+
+.cloud{
+
+    position:fixed;
+
+    width:260px;
+
+    height:80px;
+
+    background:white;
+
+    border-radius:100px;
+
+    opacity:.28;
+
+    filter:blur(8px);
+
+    z-index:-2;
+
+}
+
+.cloud1{
+
+    top:180px;
+
+    left:-300px;
+
+    animation:cloudMove 65s linear infinite;
+
+}
+
+.cloud2{
+
+    top:420px;
+
+    left:-500px;
+
+    animation:cloudMove 90s linear infinite;
+
+}/* ==========================================
+   INFORMAÇÕES
+========================================== */
+
+.info{
+
+    padding:120px 20px 80px;
+
+}
+
+.info .card{
+
+    max-width:900px;
+
+    margin:auto;
+
+    background:rgba(255,255,255,.60);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:30px;
+
+    padding:50px;
+
+    box-shadow:0 20px 45px rgba(139,92,246,.10);
+
+    animation:fadeUp .9s ease;
+
+}
+
+.info h2{
+
+    text-align:center;
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:52px;
+
+    color:#8b5cf6;
+
+    margin-bottom:40px;
+
+}
+
+.info-item{
+
+    margin-bottom:25px;
+
+}
+
+.info-item strong{
+
+    display:block;
+
+    margin-bottom:8px;
+
+    color:#8b5cf6;
+
+    font-size:18px;
+
+}
+
+.info-item p{
+
+    line-height:1.8;
+
+    color:#6e6485;
+
+}
+
+.buttons-info{
+
+    margin-top:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:20px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/* ==========================================
+   LISTA DE MIMOS
+========================================== */
+
+.gift-list{
+
+    padding:90px 20px 120px;
+
+}
+
+.gift-list h2{
+
+    text-align:center;
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:56px;
+
+    color:#8b5cf6;
+
+}
+
+.subtitle{
+
+    margin-top:10px;
+
+    text-align:center;
+
+    color:#84769d;
+
+    margin-bottom:45px;
+
+}
+
+
+/* PESQUISA */
+
+.search-box{
+
+    max-width:700px;
+
+    margin:0 auto 35px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:18px 25px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:white;
+
+    box-shadow:0 10px 25px rgba(139,92,246,.08);
+
+    outline:none;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.search-box input:focus{
+
+    box-shadow:0 15px 35px rgba(139,92,246,.18);
+
+}
+
+
+/* CATEGORIAS */
+
+.categories{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:55px;
+
+}
+
+.category{
+
+    border:none;
+
+    background:white;
+
+    padding:12px 24px;
+
+    border-radius:35px;
+
+    cursor:pointer;
+
+    color:#8b5cf6;
+
+    font-weight:600;
+
+    transition:.3s;
+
+    box-shadow:0 10px 20px rgba(139,92,246,.08);
+
+}
+
+.category:hover,
+
+.category.active{
+
+    background:#8b5cf6;
+
+    color:white;
+
+}
+
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:30px;
+
+}
+
+.gift-card{
+
+    background:rgba(255,255,255,.65);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:25px;
+
+    padding:30px;
+
+    box-shadow:0 15px 30px rgba(139,92,246,.08);
+
+    transition:.35s;
+
+    animation:fadeUp .8s ease;
+
+}
+
+.gift-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 25px 45px rgba(139,92,246,.16);
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    background:#efe6ff;
+
+    color:#8b5cf6;
+
+    padding:8px 16px;
+
+    border-radius:25px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+}
+
+.gift-card h3{
+
+    font-size:22px;
+
+    color:#6d5a8c;
+
+    margin-bottom:20px;
+
+    min-height:60px;
+
+}
+
+.quantity{
+
+    margin-bottom:30px;
+
+    color:#8b7ba5;
+
+}
+
+.quantity strong{
+
+    color:#8b5cf6;
+
+}
+
+.reserve-btn{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:35px;
+
+    padding:16px;
+
+    background:#8b5cf6;
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.reserve-btn:hover{
+
+    transform:scale(1.03);
+
+    background:#9b73ff;
+
+}
+
+
+/* ESGOTADO */
+
+.reserve-btn.disabled{
+
+    background:#d8d8d8;
+
+    color:#777;
+
+    cursor:not-allowed;
+
+}
+
+.reserve-btn.disabled:hover{
+
+    transform:none;
+
+}
+
+
+/* ==========================================
+   BOTÃO VOLTAR AO TOPO
+========================================== */
+
+#backToTop{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#8b5cf6;
+
+    color:white;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    display:none;
+
+    box-shadow:0 15px 30px rgba(139,92,246,.20);
+
+    transition:.3s;
+
+    z-index:999;
+
+}
+
+#backToTop:hover{
+
+    transform:translateY(-4px);
+
+}
+
+
+/* ==========================================
+   RODAPÉ
+========================================== */
+
+footer{
+
+    padding:70px 20px;
+
+    text-align:center;
+
+    background:linear-gradient(
+        180deg,
+        #faf8ff,
+        #f2eaff
+    );
+
+}
+
+footer p{
+
+    color:#8f7ca8;
+
+    margin-bottom:10px;
+
+}
+
+footer h3{
+
+    font-family:'Great Vibes',cursive;
+
+    font-size:42px;
+
+    color:#8b5cf6;
+
+}/* ==========================================
+   ANIMAÇÕES
+========================================== */
+
+@keyframes fadeBanner{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+        transform:translateY(40px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes twinkle{
+
+    0%{
+
+        opacity:.20;
+
+    }
+
+    50%{
+
+        opacity:.45;
+
+    }
+
+    100%{
+
+        opacity:.70;
+
+    }
+
+}
+
+@keyframes moonGlow{
+
+    0%{
+
+        transform:scale(1);
+
+        opacity:.45;
+
+    }
+
+    50%{
+
+        transform:scale(1.05);
+
+        opacity:.75;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:.45;
+
+    }
+
+}
+
+@keyframes cloudMove{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(1800px);
+
+    }
+
+}
+
+@keyframes floating{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================
+   ANIMAÇÕES DOS ELEMENTOS
+========================================== */
+
+.banner{
+
+    animation:floating 7s ease-in-out infinite;
+
+}
+
+.gift-card{
+
+    animation:fadeUp .8s ease both;
+
+}
+
+.info .card{
+
+    animation:fadeUp .9s ease both;
+
+}
+
+.btn{
+
+    transition:
+    transform .30s,
+    box-shadow .30s,
+    background .30s;
+
+}
+
+.reserve-btn{
+
+    transition:
+    transform .30s,
+    box-shadow .30s,
+    background .30s;
+
+}
+
+.reserve-btn:hover{
+
+    box-shadow:0 15px 35px rgba(139,92,246,.20);
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#faf8ff;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#ccb0ff;
+
+    border-radius:30px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#b68cff;
+
+}
+
+/* ==========================================
+   SELEÇÃO DE TEXTO
+========================================== */
+
+::selection{
+
+    background:#d9c3ff;
+
+    color:white;
+
+}
+
+/* ==========================================
+   RESPONSIVO TABLET
+========================================== */
+
+@media (max-width:992px){
+
+    .countdown-card{
+
+        width:95%;
+
+        padding:18px;
+
+    }
+
+    .time span{
+
+        font-size:28px;
+
+    }
+
+    .info .card{
+
+        padding:40px;
+
+    }
+
+    .gift-list h2{
+
+        font-size:48px;
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVO CELULAR
+========================================== */
+
+@media (max-width:768px){
+
+    header .container{
+
+        flex-direction:column;
+
+        gap:20px;
+
+    }
+
+    nav{
+
+        gap:20px;
+
+        flex-wrap:wrap;
+
+        justify-content:center;
+
+    }
+
+    .hero{
+
+        padding-top:170px;
+
+    }
+
+    .banner{
+
+        width:95%;
+
+    }
+
+    .banner img{
+
+        border-radius:20px;
+
+    }
+
+    .countdown-card{
+
+        position:relative;
+
+        bottom:auto;
+
+        left:auto;
+
+        transform:none;
+
+        margin-top:20px;
+
+        flex-wrap:wrap;
+
+        gap:15px;
+
+    }
+
+    .hero-buttons{
+
+        margin-top:45px;
+
+        padding:0 20px;
+
+    }
+
+    .btn{
+
+        width:100%;
+
+    }
+
+    .info{
+
+        padding-top:70px;
+
+    }
+
+    .info .card{
+
+        padding:30px;
+
+    }
+
+    .info h2{
+
+        font-size:40px;
+
+    }
+
+    .buttons-info{
+
+        flex-direction:column;
+
+    }
+
+    .buttons-info .btn{
+
+        width:100%;
+
+    }
+
+    .gift-list{
+
+        padding:70px 20px;
+
+    }
+
+    .gift-list h2{
+
+        font-size:42px;
+
+    }
+
+    .categories{
+
+        gap:10px;
+
+    }
+
+    .category{
+
+        font-size:14px;
+
+        padding:10px 18px;
+
+    }
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+    footer h3{
+
+        font-size:34px;
+
+    }
+
+    .moon{
+
+        width:120px;
+
+        height:120px;
+
+        top:120px;
+
+        right:-20px;
+
+    }
+
+}
+
+/* ==========================================
+   RESPONSIVO TELAS MUITO PEQUENAS
+========================================== */
+
+@media (max-width:480px){
+
+    .logo h1{
+
+        font-size:34px;
+
+    }
+
+    .logo span{
+
+        font-size:12px;
+
+    }
+
+    .time span{
+
+        font-size:22px;
+
+    }
+
+    .time small{
+
+        font-size:12px;
+
+    }
+
+    .search-box input{
+
+        padding:16px 20px;
+
+        font-size:15px;
+
+    }
+
+    .gift-card{
+
+        padding:25px;
+
+    }
+
+    .gift-card h3{
+
+        font-size:20px;
+
+    }
+
+    footer{
+
+        padding:50px 20px;
+
+    }
+
+}
+
+/* ==========================================
+   FIM DO ARQUIVO
+========================================== */
