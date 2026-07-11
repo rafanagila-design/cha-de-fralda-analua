@@ -331,7 +331,51 @@ elementos.forEach(el=>{
     observer.observe(el);
 
 });
+/* ===========================
+   LISTA DE MIMOS
+=========================== */
 
+const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbxAtjF85X4lYMXmu2-SRNNuzQiDm1Ql_D425M7E0Usn44jr2MzwNq8GbtF5nLns3owy/exec";
+
+async function carregarMimos() {
+
+    const resposta = await fetch(URL_PLANILHA);
+    const dados = await resposta.json();
+
+    const lista = document.getElementById("lista-mimos");
+
+    lista.innerHTML = "";
+
+    dados.forEach(item => {
+
+        const disponivel = Number(item.disponivel);
+
+        const card = document.createElement("div");
+        card.className = "card-mimo";
+
+        card.innerHTML = `
+
+            <h3>${item.item}</h3>
+
+            <p>${item.categoria}</p>
+
+            <span class="${disponivel > 0 ? "verde" : "vermelho"}">
+
+                ${disponivel > 0
+                    ? "Disponível (" + disponivel + ")"
+                    : "Esgotado"}
+
+            </span>
+
+        `;
+
+        lista.appendChild(card);
+
+    });
+
+}
+
+carregarMimos();
 
 /* ==========================================
    BOTÃO ESCOLHER MIMO
